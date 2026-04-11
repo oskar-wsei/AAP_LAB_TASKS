@@ -8,32 +8,40 @@ class Product:
     def __init__(self, name: str, price: float, quantity: int):
         # TODO: Zapisz atrybuty name, price, quantity
         # Pamietaj o walidacji: price >= 0, quantity >= 0
-        pass
+        if price <= 0:
+            raise ValueError("Price must be positive")
+        if quantity < 0:
+            raise ValueError("Quantity must be non-negative")
+        self.name = name
+        self.price = price
+        self.quantity = quantity
 
     def add_stock(self, amount: int):
-        """Dodaje okreslona ilosc produktow do magazynu.
-
-        Raises:
-            ValueError: jesli amount jest ujemne
-        """
-        # TODO: Zaimplementuj dodawanie do magazynu
-        pass
+        # TODO: Dodaj ilosc do magazynu. Rzuc ValueError jesli amount < 0
+        if amount < 0:
+            raise ValueError("Amount to add must be non-negative")
+        self.quantity += amount
 
     def remove_stock(self, amount: int):
-        """Usuwa okreslona ilosc produktow z magazynu.
-
-        Raises:
-            ValueError: jesli amount jest ujemne lub wieksze niz dostepna ilosc
-        """
-        # TODO: Zaimplementuj usuwanie z magazynu
-        pass
+        # TODO: Usun ilosc z magazynu.
+        # Rzuc ValueError jesli amount < 0 lub amount > quantity
+        if amount < 0:
+            raise ValueError("Amount to remove must be non-negative")
+        if amount > self.quantity:
+            raise ValueError("Amount to remove exceeds available stock")
+        self.quantity -= amount
 
     def is_available(self) -> bool:
-        """Zwraca True jesli produkt jest dostepny (quantity > 0)."""
-        # TODO: Zaimplementuj sprawdzanie dostepnosci
-        pass
+        # TODO: Zwroc True jesli quantity > 0
+        return self.quantity > 0
 
     def total_value(self) -> float:
-        """Zwraca calkowita wartosc produktow w magazynie (price * quantity)."""
-        # TODO: Zaimplementuj obliczanie wartosci
-        pass
+        # TODO: Zwroc price * quantity
+        return self.price * self.quantity
+
+    def apply_discount(self, percent: float):
+        """Obniza cene o podany procent (0-100)."""
+        # TODO: Zaimplementuj
+        if percent < 0 or percent > 100:
+            raise ValueError("Discount percent must be between 0 and 100")
+        self.price -= self.price * (percent / 100)
